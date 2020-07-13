@@ -91,7 +91,6 @@ def RotatedGen(Dataset, dataroot, train_aug, n_rotate, rotate_step, remap_class=
         #     val_datasets[name] = AppendName(val_dataset, name)
         # else:
             # For incremental class scenario, use remap_class=True
-        # TODO : Check with class remap
         first_class_ind = (task_id - 1) * train_dataset.number_classes if remap_class else 0
         assert train_dataset.number_classes == 10 and first_class_ind == 0
         # AppendName is a dataset

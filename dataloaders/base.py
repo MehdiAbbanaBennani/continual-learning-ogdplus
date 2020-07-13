@@ -53,19 +53,6 @@ def MNIST(dataroot, train_aug=False, angle=0):
     return train_dataset, val_dataset
 
 
-# def ToyMNIST(dataroot, train_aug=False, count=10) :
-#     train_dataset, val_dataset = MNIST(dataroot, train_aug)
-#
-#     train_dataset.dataset.data = train_dataset.dataset.data[:count]
-#     train_dataset.labels = train_dataset.labels[:count]
-#
-#     val_dataset.dataset.data = val_dataset.dataset.data[:count]
-#     val_dataset.labels = val_dataset.labels[:count]
-#
-#     return train_dataset, val_dataset
-# TODO : Complete this section
-
-
 def CIFAR10(dataroot, train_aug=False, angle=0):
     normalize = transforms.Normalize(mean=[0.491, 0.482, 0.447], std=[0.247, 0.243, 0.262])
     rotate = RotationTransform(angle=angle)

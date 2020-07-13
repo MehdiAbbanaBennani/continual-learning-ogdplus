@@ -3,9 +3,6 @@ import torch
 import torch.utils.data as data
 import torchvision.transforms.functional as TF
 
-# import imutils
-# import cv2
-
 
 class CacheClassLabel(data.Dataset):
     """
@@ -99,7 +96,6 @@ class Permutation(data.Dataset):
     def __getitem__(self, index):
         img,target = self.dataset[index]
         shape = img.size()
-        # TODO  : How does the permutation work ? Got it ! Just permute with respect to indices
         img = img.view(-1)[self.permute_idx].view(shape)
         return img, target
 
@@ -118,15 +114,6 @@ class Rotation(data.Dataset):
 
     def __getitem__(self, index):
         img, target = self.dataset[index]
-        # shape = img.size()
-        # img = img.view(-1)[self.permute_idx].view(shape)
-        # TODO : check that the rotation works correctly :)
-        # Source : https://www.pyimagesearch.com/2017/01/02/rotate-images-correctly-with-opencv-and-python/
-        # rotated = imutils.rotate_bound(img, self.rotate_angle)
-
-#        import matplotlib.pyplot as plt
- #       plt.imshow(img.permute(1, 2, 0))
-
         rotated = TF.rotate(img, self.rotate_angle)
         return rotated, target
 
