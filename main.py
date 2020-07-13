@@ -79,31 +79,16 @@ def run(args, wandb_run, task_output_space, n_tasks, train_dataset_splits, val_d
         shuffle(task_names)
         print('Shuffled task order:', task_names)
 
-    if args.offline_training:  # Non-incremental learning / offline_training / measure the upper-bound performance
-        train_dataset_all = torch.utils.data.ConcatDataset(train_dataset_splits.values())
-        val_dataset_all = torch.utils.data.ConcatDataset(val_dataset_splits.values())
-        train_loader = torch.utils.data.DataLoader(train_dataset_all,
-                                                   batch_size=args.batch_size, shuffle=True, num_workers=args.workers)
-        val_loader = torch.utils.data.DataLoader(val_dataset_all,
-                                                 batch_size=args.batch_size, shuffle=False, num_workers=args.workers)
-
+    for i in range(len(task_names)):
+        task_name = task_names[i]
+        print('======================', task_name, '=======================')
+        train_loader = torch.utils.data.DataLoader(train_dataset_splits[task_name],
+                                                   batch_size=args.batch_size, shuffle=True,
+                                                   num_workers=args.workers)
+        val_loader = torch.utils.data.DataLoader(val_dataset_splits[task_name],
+                                                 batch_size=args.batch_size, shuffle=False,
+                                                 num_workers=args.workers)
         agent.learn_batch(train_loader, val_loader)
-
-    else:  # Incremental learning
-        for i in range(len(task_names)):
-            task_name = task_names[i]
-            print('======================', task_name, '=======================')
-            train_loader = torch.utils.data.DataLoader(train_dataset_splits[task_name],
-                                                       batch_size=args.batch_size, shuffle=True,
-                                                       num_workers=args.workers)
-            val_loader = torch.utils.data.DataLoader(val_dataset_splits[task_name],
-                                                     batch_size=args.batch_size, shuffle=False,
-                                                     num_workers=args.workers)
-
-            # if args.incremental_class:
-            #     agent.add_valid_output_dim(task_output_space[task_name])
-
-            agent.learn_batch(train_loader, val_loader)
 
 
 if __name__ == '__main__':
@@ -114,7 +99,6 @@ if __name__ == '__main__':
         gpu: bool = True
         workers: int = 16
 
-        # repeat : int = 5
         start_seed: int = 0
         end_seed: int = 5
         val_size: int = 256
@@ -162,7 +146,6 @@ if __name__ == '__main__':
             # required=False)
             self.add_argument('--first_split_size', type=int, default=2, required=False)
             self.add_argument('--other_split_size', type=int, default=2, required=False)
-            # TODO : check --no_class_remap ; not sure ...
             self.add_argument('--no_class_remap', dest='no_class_remap', default=False, action='store_true',
                               help="Avoid the dataset with a subset of classes doing the remapping. Ex: [2,5,"
                                    "6 ...] -> [0,1,2 ...]", required=False)
@@ -189,12 +172,6 @@ if __name__ == '__main__':
                                    "for hyperparameter search.", required=False)
             self.add_argument('--eval_on_train_set', dest='eval_on_train_set', default=False, action='store_true',
                               help="Force the evaluation on train set", required=False)
-            self.add_argument('--offline_training', dest='offline_training', default=False, action='store_true',
-                              help="Non-incremental learning by make all data available in one batch. For measuring "
-                                   "the upperbound performance.", required=False)
-            self.add_argument('--incremental_class', dest='incremental_class', default=False, action='store_true',
-                              help="The number of output node in the single-headed model increases along with new "
-                                   "categories.", required=False)
 
 
     config = Config().parse_args()
