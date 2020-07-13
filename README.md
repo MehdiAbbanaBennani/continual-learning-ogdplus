@@ -1,1 +1,3 @@
-# continual-learning-ogdplus
+# Continual Learning with OGD and OGD+
+
+## 
