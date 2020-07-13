@@ -7,6 +7,8 @@ This is the official implementation of the article [Generalisation Guarantees fo
 ## Requirements
 - PyTorch >= 1.5.0 
 - https://github.com/GT-RIPL/Continual-Learning-Benchmark
+- [Typed Argument Parser](https://github.com/swansonk14/typed-argument-parser)
+- wandb
 
 Please clone the GT-RIPL/Continual-Learning-Benchmark repository and append it to your PYTHONPATH.
 
