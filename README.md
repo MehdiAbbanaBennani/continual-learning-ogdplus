@@ -5,7 +5,11 @@ This is the official implementation of the article [Generalisation Guarantees fo
  Descent](https://arxiv.org/abs/2006.11942) in PyTorch.
  
 ## Requirements
- PyTorch >= 1.5.0 
+- PyTorch >= 1.5.0 
+- https://github.com/GT-RIPL/Continual-Learning-Benchmark
+
+Please clone the GT-RIPL/Continual-Learning-Benchmark repository and append it to your PYTHONPATH.
+
 
 ## Reproducibility
 In order to replicate the results of the paper, please run the scripts provided in the scripts directory.
