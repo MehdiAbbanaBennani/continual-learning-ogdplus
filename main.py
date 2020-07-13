@@ -107,7 +107,6 @@ if __name__ == '__main__':
         nepoch: int = 5
         val_check_interval: int = 50
         batch_size: int = 256
-        train_percent_check: float = 1.
 
         memory_size: int = 1000
         hidden_dim: int = 256
@@ -118,15 +117,12 @@ if __name__ == '__main__':
         is_split: bool = False
         data_seed: int = 2
 
-        toy: bool = False
         ogd: bool = False
         ogd_plus: bool = False
 
         no_random_name: bool = False
 
         def add_arguments(self):
-            self.add_argument('--gpuid', nargs="+", type=int, default=[0],
-                              help="The list of gpuid, ex:--gpuid 3 1. Negative value means cpu-only", required=False)
             self.add_argument('--model_type', type=str, default='mlp',
                               help="The type (mlp|lenet|vgg|resnet) of backbone network", required=False)
             self.add_argument('--model_name', type=str, default='MLP',
@@ -136,14 +132,10 @@ if __name__ == '__main__':
             self.add_argument('--agent_type', type=str, default='ogd_plus', help="The type (filename) of agent",
                               required=False)
             self.add_argument('--agent_name', type=str, default='OGD', help="The class name of agent", required=False)
-            self.add_argument('--optimizer', type=str, default='SGD',
-                              help="SGD|Adam|RMSprop|amsgrad|Adadelta|Adagrad|Adamax ...", required=False)
             self.add_argument('--dataroot', type=str, default='data',
                               help="The root folder of dataset or downloaded data", required=False)
             self.add_argument('--dataset', type=str, default='MNIST', help="MNIST(default)|CIFAR10|CIFAR100",
                               required=False)
-            # self.add_argument('--n_permutation', type=int, default=0, help="Enable permuted tests when >0",
-            # required=False)
             self.add_argument('--first_split_size', type=int, default=2, required=False)
             self.add_argument('--other_split_size', type=int, default=2, required=False)
             self.add_argument('--no_class_remap', dest='no_class_remap', default=False, action='store_true',
@@ -155,24 +147,6 @@ if __name__ == '__main__':
                               help="Randomize the classes in splits", required=False)
             self.add_argument('--rand_split_order', dest='rand_split_order', default=False, action='store_true',
                               help="Randomize the order of splits", required=False)
-            self.add_argument('--workers', type=int, default=3, help="#Thread for dataloader", required=False)
-            # self.add_argument('--batch_size', type=int, default=100)
-            # self.add_argument('--lr', type=float, default=0.01, help="Learning rate")
-            self.add_argument('--momentum', type=float, default=0, required=False)
-            self.add_argument('--weight_decay', type=float, default=0, required=False)
-            self.add_argument('--schedule', nargs="+", type=int, default=[5],
-                              help="The list of epoch numbers to reduce learning rate by factor of 0.1. Last number "
-                                   "is the end epoch", required=False)
-            self.add_argument('--print_freq', type=float, default=100, help="Print the log at every x iteration",
-                              required=False)
-            self.add_argument('--model_weights', type=str, default=None,
-                              help="The path to the file for the model weights (*.pth).", required=False)
-            self.add_argument('--reg_coef', nargs="+", type=float, default=[0.],
-                              help="The coefficient for regularization. Larger means less plasilicity. Give a list "
-                                   "for hyperparameter search.", required=False)
-            self.add_argument('--eval_on_train_set', dest='eval_on_train_set', default=False, action='store_true',
-                              help="Force the evaluation on train set", required=False)
-
 
     config = Config().parse_args()
     config = config.as_dict()
@@ -189,8 +163,7 @@ if __name__ == '__main__':
         config.run_seed = repeat_id + 1
 
         name = f"{config.run_name}-{repeat_id}"
-        wandb_run = wandb.init(tags=["lightning"],
-                               project="research-continual-learning",
+        wandb_run = wandb.init(project="research-continual-learning",
                                sync_tensorboard=False,
                                group=config.group_id,
                                config=config,
