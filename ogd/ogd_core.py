@@ -15,6 +15,7 @@ import wandb
 import random
 import models
 
+
 def orthonormalize(vectors, gpu, normalize=True):
     assert (vectors.size(1) <= vectors.size(0)), 'number of vectors must be smaller or equal to the dimension'
     # orthonormalized_vectors = torch.zeros_like(vectors)
@@ -33,6 +34,7 @@ def orthonormalize(vectors, gpu, normalize=True):
             vectors[:, i] = (vector - PV_vector)
 
     return vectors
+
 
 def project_vec(vec, proj_basis, gpu):
     if proj_basis.shape[1] > 0:  # param x basis_size
@@ -78,7 +80,6 @@ def grad_vector_to_parameters(vec, parameters):
 
         # Increment the pointer
         pointer += num_param
-
 
 
 def validate(testloader, model, gpu, size):
@@ -130,12 +131,10 @@ class AgentModel(pl.LightningModule):
         else :
             n_params = count_parameter(self.model)
         self.ogd_basis = torch.empty(n_params, 0)
-        # self.ogd_basis = None
         self.ogd_basis_ids = defaultdict(lambda: torch.LongTensor([]))
         self.mem_dataset = None
 
         if self.config.gpu:
-            # self.ogd_basis = self.ogd_basis.cuda()
             self.ogd_basis_ids = defaultdict(lambda: torch.LongTensor([]).cuda())
 
         self.val_loaders = val_loaders
@@ -201,21 +200,15 @@ class AgentModel(pl.LightningModule):
                 inputs = inputs.cuda()
                 targets = targets.cuda()
 
-            # out = model(inputs)
             out = self.forward(x=inputs, task=(tasks))
-            # assert out.shape[0] == 1
             label = targets.item()
             pred = out[0, label]
 
             optimizer.zero_grad()
             pred.backward()
 
-            # grad_vec = parameters_to_grad_vector(model.parameters())
             grad_vec = parameters_to_grad_vector(self.get_params_dict(last=False))
             new_basis.append(grad_vec)
-            # else:
-            #     print('Memory filled')
-            #     break
         new_basis_tensor = torch.stack(new_basis).T
         return new_basis_tensor
 
@@ -237,7 +230,6 @@ class AgentModel(pl.LightningModule):
         loss = self.criterion_fn(output, target)
 
         self.task_id = int(task[0])
-        # self.task_id = task_id
 
         if batch_nb % self.config.val_check_interval == 0:
             log_dict = dict()
@@ -274,8 +266,6 @@ class AgentModel(pl.LightningModule):
     def optimizer_step(self, current_epoch, batch_idx, optimizer, optimizer_idx,
                        second_order_closure=None, using_native_amp=None):
         # STEP :
-        # TODO : params_dict under conditions, check that the updates are done correctly
-
         task_key = str(self.task_id)
 
         cur_param = parameters_to_vector(self.get_params_dict(last=False))
@@ -297,7 +287,6 @@ class AgentModel(pl.LightningModule):
             grad_vec = parameters_to_grad_vector(self.get_params_dict(last=True, task_key=task_key))
             cur_param -= self.config.lr * grad_vec
             vector_to_parameters(cur_param, self.get_params_dict(last=True, task_key=task_key))
-            # TODO : Add GD for the last layer :)
         # ZERO GRAD
         optimizer.zero_grad()
 
@@ -402,7 +391,6 @@ class AgentModel(pl.LightningModule):
                 self.task_grad_memory[t].append(self.ogd_basis[:, ptr])
                 ptr += 1
         print(f"Used memory {ptr} / {self.config.memory_size}")
-        # assert ptr == self.config.memory_size
 
     def update_ogd_basis(self, task_id, data_train_loader):
         if self.config.ogd or self.config.ogd_plus:
