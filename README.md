@@ -1,6 +1,7 @@
 # Continual Learning with OGD and OGD+
 
-This is the official implementation of the [Generalisation Guarantees for Continual Learning with Orthogonal Gradient
+This is the official implementation of the article [Generalisation Guarantees for Continual Learning with Orthogonal
+ Gradient
  Descent](https://arxiv.org/abs/2006.11942) in PyTorch.
  
 ## Requirements

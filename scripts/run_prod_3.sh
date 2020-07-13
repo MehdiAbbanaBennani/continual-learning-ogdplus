@@ -1,5 +1,3 @@
-
-
  # Split CIFAR100
  # SGD
  NAME=debug-cifar100-sgd
