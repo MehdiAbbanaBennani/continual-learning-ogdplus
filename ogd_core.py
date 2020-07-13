@@ -15,14 +15,6 @@ import wandb
 import random
 import models
 
-
-class dotdict(dict):
-    """dot.notation access to dictionary attributes"""
-    __getattr__ = dict.get
-    __setattr__ = dict.__setitem__
-    __delattr__ = dict.__delitem__
-
-
 def orthonormalize(vectors, gpu, normalize=True):
     assert (vectors.size(1) <= vectors.size(0)), 'number of vectors must be smaller or equal to the dimension'
     # orthonormalized_vectors = torch.zeros_like(vectors)

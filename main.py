@@ -1,13 +1,13 @@
-import torch
-from random import shuffle
 import dataloaders.base
 from dataloaders.datasetGen import SplitGen, PermutedGen, RotatedGen
 import agents
-from utils.utils import dotdict
 
-import wandb
+from .utils import dotdict
 from tap import Tap
+import wandb
 import numpy as np
+import torch
+from random import shuffle
 
 
 def prepare_dataloaders(args):
@@ -100,7 +100,6 @@ def run(args, wandb_run, task_output_space, n_tasks, train_dataset_splits, val_d
                                                      batch_size=args.batch_size, shuffle=False,
                                                      num_workers=args.workers)
 
-            # TODO : Add this part ASAP
             # if args.incremental_class:
             #     agent.add_valid_output_dim(task_output_space[task_name])
 
@@ -116,11 +115,11 @@ if __name__ == '__main__':
         workers: int = 16
 
         # repeat : int = 5
-        start_seed : int = 0
-        end_seed : int = 5
+        start_seed: int = 0
+        end_seed: int = 5
         val_size: int = 256
         lr: float = 1e-2
-        scheduler : bool = False
+        scheduler: bool = False
         nepoch: int = 5
         val_check_interval: int = 50
         batch_size: int = 256
@@ -129,17 +128,17 @@ if __name__ == '__main__':
         memory_size: int = 1000
         hidden_dim: int = 256
 
-        n_permutation : int = 0
-        n_rotate : int = 0
-        rotate_step : int = 0
-        is_split : bool = False
-        data_seed : int = 2
+        n_permutation: int = 0
+        n_rotate: int = 0
+        rotate_step: int = 0
+        is_split: bool = False
+        data_seed: int = 2
 
         toy: bool = False
         ogd: bool = False
         ogd_plus: bool = False
 
-        no_random_name : bool = False
+        no_random_name: bool = False
 
         def add_arguments(self):
             self.add_argument('--gpuid', nargs="+", type=int, default=[0],
@@ -150,14 +149,17 @@ if __name__ == '__main__':
                               help="The name of actual model for the backbone", required=False)
             self.add_argument('--force_out_dim', type=int, default=2,
                               help="Set 0 to let the task decide the required output dimension", required=False)
-            self.add_argument('--agent_type', type=str, default='ogd_plus', help="The type (filename) of agent", required=False)
+            self.add_argument('--agent_type', type=str, default='ogd_plus', help="The type (filename) of agent",
+                              required=False)
             self.add_argument('--agent_name', type=str, default='OGD', help="The class name of agent", required=False)
             self.add_argument('--optimizer', type=str, default='SGD',
                               help="SGD|Adam|RMSprop|amsgrad|Adadelta|Adagrad|Adamax ...", required=False)
             self.add_argument('--dataroot', type=str, default='data',
                               help="The root folder of dataset or downloaded data", required=False)
-            self.add_argument('--dataset', type=str, default='MNIST', help="MNIST(default)|CIFAR10|CIFAR100", required=False)
-            # self.add_argument('--n_permutation', type=int, default=0, help="Enable permuted tests when >0", required=False)
+            self.add_argument('--dataset', type=str, default='MNIST', help="MNIST(default)|CIFAR10|CIFAR100",
+                              required=False)
+            # self.add_argument('--n_permutation', type=int, default=0, help="Enable permuted tests when >0",
+            # required=False)
             self.add_argument('--first_split_size', type=int, default=2, required=False)
             self.add_argument('--other_split_size', type=int, default=2, required=False)
             # TODO : check --no_class_remap ; not sure ...
@@ -178,7 +180,8 @@ if __name__ == '__main__':
             self.add_argument('--schedule', nargs="+", type=int, default=[5],
                               help="The list of epoch numbers to reduce learning rate by factor of 0.1. Last number "
                                    "is the end epoch", required=False)
-            self.add_argument('--print_freq', type=float, default=100, help="Print the log at every x iteration", required=False)
+            self.add_argument('--print_freq', type=float, default=100, help="Print the log at every x iteration",
+                              required=False)
             self.add_argument('--model_weights', type=str, default=None,
                               help="The path to the file for the model weights (*.pth).", required=False)
             self.add_argument('--reg_coef', nargs="+", type=float, default=[0.],
@@ -193,12 +196,12 @@ if __name__ == '__main__':
                               help="The number of output node in the single-headed model increases along with new "
                                    "categories.", required=False)
 
-    # TODO : check known only
+
     config = Config().parse_args()
     config = config.as_dict()
     config = dotdict(config)
 
-    if not config.no_random_name :
+    if not config.no_random_name:
         config.group_id = config.group_id + "-" + wandb.util.generate_id()
 
     torch.manual_seed(config.data_seed)
