@@ -5,9 +5,8 @@ This is the official implementation of the article [Generalisation Guarantees fo
  Descent](https://arxiv.org/abs/2006.11942) in PyTorch.
  
 ## Requirements
-- PyTorch >= 1.5.0 
-- [Typed Argument Parser](https://github.com/swansonk14/typed-argument-parser)
-- wandb
+- I ran most of the experiments with PyTorch >= 1.5.0 
+- Regarding the other packages, please refer to *requirements.txt*
 
 
 ## Reproducibility

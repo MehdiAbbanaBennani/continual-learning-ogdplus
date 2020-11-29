@@ -1,0 +1,15 @@
+argparse
+typed-argument-parser
+numpy
+dask
+scikit-learn
+matplotlib
+numpy
+pandas
+pyparsing
+python-dateutil
+scipy
+seaborn
+six
+tqdm
+gdown
