@@ -10,11 +10,20 @@ This is the official implementation of the article [Generalisation Guarantees fo
 
 
 ## Reproducibility
+
+### Running the experiments
 In order to replicate the results of the paper, please refer to the scripts provided in the scripts
  directory.
 - The production scripts have a prefix *prod*.
 - The ablation studies scripts have a prefix *ablation*.
 - The grid search scripts have a prefix *gs*.
+
+### Grid search results
+The grid search results are provided under the results directory :
+- gs_dynamics_* contain the training dynamics results comprising the validation accuracy at the
+ end of each task
+- gs_metrics_* are summary files which contain the Continual Learning metrics AAC, FWT, BWT and AFM
+ for each run
  
 ## Questions/ Bugs
 - For questions or bugs, please feel free to contact me or to raise an issue on Github :)
@@ -51,18 +60,3 @@ It was released under The MIT License found in the LICENSE file in the root dire
  to run the experiments on other datasets.** 
  
   Please let me know if you have any issues :)
-  
-  
-## Citation
-If this repository helps your work, please cite:
-
-```
-@misc{bennani2020generalisation,
-      title={Generalisation Guarantees for Continual Learning with Orthogonal Gradient Descent}, 
-      author={Mehdi Abbana Bennani and Thang Doan and Masashi Sugiyama},
-      year={2020},
-      eprint={2006.11942},
-      archivePrefix={arXiv},
-      primaryClass={stat.ML}
-}
-```
