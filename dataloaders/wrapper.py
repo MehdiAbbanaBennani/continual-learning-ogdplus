@@ -1,4 +1,5 @@
 from os import path
+
 import torch
 import torch.utils.data as data
 import torchvision.transforms.functional as TF
@@ -38,6 +39,7 @@ class AppendName(data.Dataset):
         self.dataset = dataset
         self.name = name
         self.first_class_ind = first_class_ind  # For remapping the class index
+        # self.class_list = list(set(dataset.dataset.labels.tolist()))
 
     def __len__(self):
         return len(self.dataset)
@@ -96,6 +98,7 @@ class Permutation(data.Dataset):
     def __getitem__(self, index):
         img,target = self.dataset[index]
         shape = img.size()
+        # TODO  : How does the permutation work ? Got it ! Just permute with respect to indices
         img = img.view(-1)[self.permute_idx].view(shape)
         return img, target
 
@@ -114,6 +117,7 @@ class Rotation(data.Dataset):
 
     def __getitem__(self, index):
         img, target = self.dataset[index]
+
         rotated = TF.rotate(img, self.rotate_angle)
         return rotated, target
 

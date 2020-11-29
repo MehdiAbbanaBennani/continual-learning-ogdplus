@@ -10,26 +10,16 @@ This is the official implementation of the article [Generalisation Guarantees fo
 - [Typed Argument Parser](https://github.com/swansonk14/typed-argument-parser)
 - wandb
 
-Please clone the GT-RIPL/Continual-Learning-Benchmark repository and append it to your PYTHONPATH.
-
 
 ## Reproducibility
-In order to replicate the results of the paper, please run the scripts provided in the scripts directory.
+In order to replicate the results of the paper, please refer to the scripts provided in the scripts
+ directory.
+The production scripts have a prefix *prod*.
+The ablation studies scripts have a prefix *ablation*.
+The grid search scripts have a prefix *gs*.
  
 ## Questions/ Bugs
-- For questions or bugs, please feel free to contact Mehdi Abbana Bennani or to raise an issue on Github :)
-
-## Citation
-If this repository helps your work, please cite:
-
-```
-@article{bennani2020generalisation,
-    title={Generalisation Guarantees for Continual Learning with Orthogonal Gradient Descent},
-    author={Mehdi Abbana Bennani and Masashi Sugiyama},
-    year={2020},
-    journal={ICML 4th Lifelong Learning Workshop},
-}
-```
+- For questions or bugs, please feel free to contact me or to raise an issue on Github :)
 
 
 ## Licence
@@ -47,6 +37,32 @@ A substantial part of this source code was initially forked from the repository 
 }
 ```
  
- 
- 
  This source code is released under The MIT License found in the LICENSE file in the root directory of this source tree. 
+ 
+ 
+ Also the [Stable SGD](https://arxiv.org/abs/2006.06958) code in the *external* folder was forked from this [repository](https
+ ://github.com/imirzadeh/stable-continual-learning/tree/master/stable_sgd).
+ For reproducibility experiments on the original [paper](https://arxiv.org/abs/2006.06958), I
+  recommend to work with the
+  original code because I brought some modifications to it in this repository, it may also not be
+   up to date.
+ 
+ **These modifications were for
+ logging, consistency with the other benchmarks and in order
+ to run the experiments on other datasets.** 
+  Please let me know if you have any issues :)
+  
+  
+## Citation
+If this repository helps your work, please cite:
+
+```
+@misc{bennani2020generalisation,
+      title={Generalisation Guarantees for Continual Learning with Orthogonal Gradient Descent}, 
+      author={Mehdi Abbana Bennani and Thang Doan and Masashi Sugiyama},
+      year={2020},
+      eprint={2006.11942},
+      archivePrefix={arXiv},
+      primaryClass={stat.ML}
+}
+```

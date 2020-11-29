@@ -78,19 +78,24 @@ def PermutedGen(train_dataset, val_dataset, n_permute, remap_class=False):
 
 
 # Returns dicts of train, val datasets, and task output space ; key -> str(task_id)
-def RotatedGen(Dataset, dataroot, train_aug, n_rotate, rotate_step, remap_class=False):
+def RotatedGen(Dataset, dataroot, train_aug, n_rotate, rotate_step,
+               remap_class=False, rotations=None, subset_size=None):
     train_datasets = {}
     val_datasets = {}
     task_output_space = {}
     rotate_angle = 0
+
+    rotations = list(map(int, rotations))
+    if len(rotations) > 0:
+        n_rotate = len(rotations)
+
     for task_id in range(1, n_rotate + 1):
-        train_dataset, val_dataset = Dataset(dataroot, train_aug, angle=rotate_angle)
+        if len(rotations) > 0 :
+            rotate_angle = rotations[task_id - 1]
+
+        train_dataset, val_dataset = Dataset(dataroot, train_aug, angle=rotate_angle, subset_size=subset_size)
         task_name = str(task_id)
-        # if i == 1:  # First task has no rotation
-        #     train_datasets[name] = AppendName(train_dataset, name)
-        #     val_datasets[name] = AppendName(val_dataset, name)
-        # else:
-            # For incremental class scenario, use remap_class=True
+    
         first_class_ind = (task_id - 1) * train_dataset.number_classes if remap_class else 0
         assert train_dataset.number_classes == 10 and first_class_ind == 0
         # AppendName is a dataset
