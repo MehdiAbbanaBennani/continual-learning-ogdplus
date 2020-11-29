@@ -6,7 +6,6 @@ This is the official implementation of the article [Generalisation Guarantees fo
  
 ## Requirements
 - PyTorch >= 1.5.0 
-- https://github.com/GT-RIPL/Continual-Learning-Benchmark
 - [Typed Argument Parser](https://github.com/swansonk14/typed-argument-parser)
 - wandb
 
@@ -14,18 +13,19 @@ This is the official implementation of the article [Generalisation Guarantees fo
 ## Reproducibility
 In order to replicate the results of the paper, please refer to the scripts provided in the scripts
  directory.
-The production scripts have a prefix *prod*.
-The ablation studies scripts have a prefix *ablation*.
-The grid search scripts have a prefix *gs*.
+- The production scripts have a prefix *prod*.
+- The ablation studies scripts have a prefix *ablation*.
+- The grid search scripts have a prefix *gs*.
  
 ## Questions/ Bugs
 - For questions or bugs, please feel free to contact me or to raise an issue on Github :)
 
 
 ## Licence
+### Continual-Learning-Benchmark
 A substantial part of this source code was initially forked from the repository [GT-RIPL/Continual-Learning-Benchmark
-](https://github.com/GT-RIPL/Continual-Learning-Benchmark). The associated Licence is also provided in the root
- directory.  
+](https://github.com/GT-RIPL/Continual-Learning-Benchmark). The corresponding Licence is also
+ provided in the root directory.  
  The work related to the original source code is the following : 
  ```
 @inproceedings{Hsu18_EvalCL,
@@ -37,19 +37,20 @@ A substantial part of this source code was initially forked from the repository 
 }
 ```
  
- This source code is released under The MIT License found in the LICENSE file in the root directory of this source tree. 
+It was released under The MIT License found in the LICENSE file in the root directory of this
+ source tree. 
  
+ ### stable-continual-learning
+ The [Stable SGD](https://arxiv.org/abs/2006.06958) code in the *external* folder was forked from
+  this [repository](https://github.com/imirzadeh/stable-continual-learning/tree/master/stable_sgd).
  
- Also the [Stable SGD](https://arxiv.org/abs/2006.06958) code in the *external* folder was forked from this [repository](https
- ://github.com/imirzadeh/stable-continual-learning/tree/master/stable_sgd).
- For reproducibility experiments on the original [paper](https://arxiv.org/abs/2006.06958), I
-  recommend to work with the
-  original code because I brought some modifications to it in this repository, it may also not be
-   up to date.
+ Since I brought some changes to it, for reproducibility experiments of the original [paper](https://arxiv.org/abs/2006.06958), I
+  recommend to fork the original codebase. This fork may also not be up to date.
  
- **These modifications were for
+ **The modifications I brought were for
  logging, consistency with the other benchmarks and in order
  to run the experiments on other datasets.** 
+ 
   Please let me know if you have any issues :)
   
   
