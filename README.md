@@ -5,8 +5,8 @@ This is the official implementation of the article [Generalisation Guarantees fo
  Descent](https://arxiv.org/abs/2006.11942) in PyTorch.
  
 ## Requirements
-- I ran most of the experiments with PyTorch >= 1.5.0 
-- Regarding the other packages, please refer to *requirements.txt*
+- I ran most of the experiments with PyTorch = 1.5.1 
+- The precie environment configuration is presented in *requirements.txt* :) 
 
 
 ## Reproducibility
